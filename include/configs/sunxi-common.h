@@ -50,7 +50,12 @@
  */
 #define CONFIG_DISPLAY_CPUINFO
 
+#ifdef MIKEY
 #define CONFIG_SYS_PROMPT	"sunxi# "
+#else
+#define CONFIG_SYS_PROMPT	"IoT# "
+#define CONFIG_SUPPORT_RAW_INITRD
+#endif
 
 /* Serial & console */
 #define CONFIG_SYS_NS16550
@@ -288,6 +293,10 @@ extern int soft_i2c_gpio_scl;
 #define CONFIG_CFB_CONSOLE
 #define CONFIG_VIDEO_SW_CURSOR
 #define CONFIG_VIDEO_LOGO
+#ifdef MIKEY
+#else
+#define CONFIG_VIDEO_BMP_LOGO
+#endif
 #define CONFIG_VIDEO_STD_TIMINGS
 #define CONFIG_I2C_EDID
 
@@ -391,9 +400,9 @@ extern int soft_i2c_gpio_scl;
 #endif
 
 #define BOOT_TARGET_DEVICES(func) \
-	BOOT_TARGET_DEVICES_MMC(func) \
 	BOOT_TARGET_DEVICES_SCSI(func) \
 	BOOT_TARGET_DEVICES_USB(func) \
+	BOOT_TARGET_DEVICES_MMC(func) \
 	func(PXE, pxe, na) \
 	func(DHCP, dhcp, na)
 
